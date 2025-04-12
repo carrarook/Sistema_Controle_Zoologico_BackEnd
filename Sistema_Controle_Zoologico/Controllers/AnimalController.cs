@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZooManagement.Models;
-using ZooManagement.Data;
+using Sistema_Controle_Zoologico.Models;
+using Sistema_Controle_Zoologico.Data;
 
 namespace ZooManagement.Controllers
 {
