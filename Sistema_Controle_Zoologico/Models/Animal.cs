@@ -1,23 +1,19 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sistema_Controle_Zoologico.Models
 {
     public class Animal
     {
         public int Id { get; set; }
-
-        [Required]
         public string Nome { get; set; }
+        public string Descricao { get; set; }  
+        public DateTime? DataNascimento { get; set; } 
+        public string Especie { get; set; }  
+        public string Habitat { get; set; }  
+        public string PaisOrigem { get; set; }  
 
-        [Required]
-        public string Especie { get; set; }
-
-        public int Idade { get; set; }
-
-        public string Sexo { get; set; }
-
-        // Relação muitos-para-muitos com Cuidado via tabela AnimalCuidado
+        
         public ICollection<AnimalCuidado> AnimalCuidados { get; set; }
     }
 }

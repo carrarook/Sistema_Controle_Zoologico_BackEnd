@@ -5,8 +5,7 @@ namespace Sistema_Controle_Zoologico.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
@@ -18,28 +17,19 @@ namespace Sistema_Controle_Zoologico.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuração da relação muitos-para-muitos entre Animal e Cuidado
+            // Configuração de relacionamento Muitos-para-Muitos entre Animal e Cuidado
             modelBuilder.Entity<AnimalCuidado>()
                 .HasKey(ac => new { ac.AnimalId, ac.CuidadoId });
 
             modelBuilder.Entity<AnimalCuidado>()
                 .HasOne(ac => ac.Animal)
                 .WithMany(a => a.AnimalCuidados)
-                .HasForeignKey(ac => ac.AnimalId)
-                .OnDelete(DeleteBehavior.Restrict); // Previne exclusão em cascata
+                .HasForeignKey(ac => ac.AnimalId);
 
             modelBuilder.Entity<AnimalCuidado>()
                 .HasOne(ac => ac.Cuidado)
                 .WithMany(c => c.AnimalCuidados)
-                .HasForeignKey(ac => ac.CuidadoId)
-                .OnDelete(DeleteBehavior.Restrict); // Previne exclusão em cascata
-
-            // Configurações adicionais para entidades
-            modelBuilder.Entity<Animal>()
-                .HasIndex(a => a.Nome);
-
-            modelBuilder.Entity<Cuidado>()
-                .HasIndex(c => c.Nome);
+                .HasForeignKey(ac => ac.CuidadoId);
         }
     }
 }
