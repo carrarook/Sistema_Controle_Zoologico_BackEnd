@@ -42,9 +42,8 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API para gerenciamento de um zoológico",
         Contact = new OpenApiContact
         {
-            Name = "Seu Nome",
-            Email = "seuemail@dominio.com",
-            Url = new Uri("https://seusite.com")
+            Name = "Brunin",
+            Email = "bbãodemais@dominio.com"
         }
     });
 });
