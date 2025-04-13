@@ -1,0 +1,6 @@
+﻿Dockerfile
+.dockerignore
+.git
+.gitignore
+bin/
+obj/
