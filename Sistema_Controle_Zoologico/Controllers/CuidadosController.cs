@@ -112,6 +112,39 @@ namespace ZooManagement.Controllers
             return NoContent();
         }
 
+        //Adicionar cuidado ao animal
+        [HttpPost("{cuidadoId}/animais/{animalId}")]
+        public async Task<IActionResult> AdicionarAnimalAoCuidado(int cuidadoId, int animalId)
+        {
+            var animalCuidado = new AnimalCuidado
+            {
+                CuidadoId = cuidadoId,
+                AnimalId = animalId
+            };
+
+            _context.AnimalCuidados.Add(animalCuidado);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        //deletar cuidado do animal
+        [HttpDelete("{cuidadoId}/animais/{animalId}")]
+        public async Task<IActionResult> RemoverAnimalDoCuidado(int cuidadoId, int animalId)
+        {
+            var relacao = await _context.AnimalCuidados
+                .FirstOrDefaultAsync(ac => ac.CuidadoId == cuidadoId && ac.AnimalId == animalId);
+
+            if (relacao == null) return NotFound();
+
+            _context.AnimalCuidados.Remove(relacao);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+
         // GET: api/Cuidados/5/Animais
         [HttpGet("{id}/Animais")]
         public async Task<ActionResult<IEnumerable<Animal>>> GetAnimaisPorCuidado(int id)

@@ -11,6 +11,6 @@ namespace Sistema_Controle_Zoologico.Models
         public string Frequencia { get; set; } 
 
   
-        public ICollection<AnimalCuidado> AnimalCuidados { get; set; }
+        public ICollection<AnimalCuidado>? AnimalCuidados { get; set; }
     }
 }

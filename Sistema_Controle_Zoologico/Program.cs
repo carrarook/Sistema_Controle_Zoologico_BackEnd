@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Sistema_Controle_Zoologico.Data;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +13,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//teste preserver
+// Configuração para preservar referências em JSON
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
         options.JsonSerializerOptions.WriteIndented = true;
     });
-
-
 
 // Configurar CORS
 builder.Services.AddCors(options =>
@@ -29,6 +30,23 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
+});
+
+// Adicionar Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Sistema de Controle Zoológico API",
+        Version = "v1",
+        Description = "API para gerenciamento de um zoológico",
+        Contact = new OpenApiContact
+        {
+            Name = "Seu Nome",
+            Email = "seuemail@dominio.com",
+            Url = new Uri("https://seusite.com")
+        }
+    });
 });
 
 var app = builder.Build();
@@ -45,6 +63,17 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("AllowReactApp");
 app.UseAuthorization();
+
+// Habilitar o Swagger e Swagger UI
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(); // Habilita o Swagger
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Controle Zoológico API v1");
+        c.RoutePrefix = string.Empty; // O Swagger UI estará disponível em /
+    });
+}
 
 app.MapControllerRoute(
     name: "default",

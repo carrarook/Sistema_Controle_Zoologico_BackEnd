@@ -14,6 +14,6 @@ namespace Sistema_Controle_Zoologico.Models
         public string PaisOrigem { get; set; }  
 
         
-        public ICollection<AnimalCuidado> AnimalCuidados { get; set; }
+        public ICollection<AnimalCuidado>? AnimalCuidados { get; set; }
     }
 }
