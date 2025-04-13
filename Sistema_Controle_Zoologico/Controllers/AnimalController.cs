@@ -20,6 +20,18 @@ namespace ZooManagement.Controllers
             _context = context;
         }
 
+        // GET: api/AnimaisEspecies
+        [HttpGet("contagem-especies")]
+        public async Task<ActionResult<int>> GetContagemEspecies()
+        {
+            var contagemEspecies = await _context.Animais
+                .Select(a => a.Especie)
+                .Distinct()
+                .CountAsync();
+
+            return Ok(contagemEspecies); 
+        }
+
         // GET: api/Animais
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Animal>>> GetAnimais()

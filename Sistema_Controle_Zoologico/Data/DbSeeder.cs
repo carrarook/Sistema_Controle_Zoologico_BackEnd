@@ -25,28 +25,9 @@ namespace Sistema_Controle_Zoologico.Data
                     Frequencia = "Diária"
                 };
 
-                var exameVeterinario = new Cuidado
-                {
-                    Nome = "Exame Veterinário",
-                    Descricao = "Avaliação de saúde completa",
-                    Frequencia = "Mensal"
-                };
+               
 
-                var vacinacao = new Cuidado
-                {
-                    Nome = "Vacinação",
-                    Descricao = "Aplicação de vacinas preventivas",
-                   Frequencia = "Anual"
-                };
-
-                var treinamento = new Cuidado
-                {
-                    Nome = "Treinamento",
-                    Descricao = "Técnicas de condicionamento e enriquecimento ambiental",
-                    Frequencia = "Semanal"
-                };
-
-                context.Cuidados.AddRange(alimentacao, exameVeterinario, vacinacao, treinamento);
+                context.Cuidados.AddRange(alimentacao);
                 context.SaveChanges();
 
                 var leao = new Animal
@@ -59,36 +40,13 @@ namespace Sistema_Controle_Zoologico.Data
                     PaisOrigem = "Quênia"
                 };
 
-                var tigre = new Animal
-                {
-                    Nome = "Rajah",
-                    Descricao = "Tigre de bengala jovem com pelagem vibrante",
-                    DataNascimento = new DateTime(2020, 3, 15),
-                    Especie = "Panthera tigris",
-                    Habitat = "Floresta tropical",
-                    PaisOrigem = "Índia"
-                };
+              
 
-                var elefante = new Animal
-                {
-                    Nome = "Dumbo",
-                   Descricao = "Elefante asiático macho com orelhas grandes",
-                    DataNascimento = new DateTime(2015, 7, 20),
-                   Especie = "Elephas maximus",
-                  Habitat = "Floresta tropical",
-                    PaisOrigem = "Tailândia"
-                };
-
-                context.Animais.AddRange(leao, tigre, elefante);
+                context.Animais.AddRange(leao);
                 context.SaveChanges();
 
                 context.AnimalCuidados.AddRange(
-                    new AnimalCuidado { AnimalId = leao.Id, CuidadoId = alimentacao.Id },
-                    new AnimalCuidado { AnimalId = leao.Id, CuidadoId = exameVeterinario.Id },
-                    new AnimalCuidado { AnimalId = tigre.Id, CuidadoId = alimentacao.Id },
-                    new AnimalCuidado { AnimalId = tigre.Id, CuidadoId = vacinacao.Id },
-                    new AnimalCuidado { AnimalId = elefante.Id, CuidadoId = alimentacao.Id },
-                    new AnimalCuidado { AnimalId = elefante.Id, CuidadoId = treinamento.Id }
+                    new AnimalCuidado { AnimalId = leao.Id, CuidadoId = alimentacao.Id }
                 );
 
                 context.SaveChanges();

@@ -12,12 +12,13 @@ namespace Sistema_Controle_Zoologico.Data
         public DbSet<Animal> Animais { get; set; }
         public DbSet<Cuidado> Cuidados { get; set; }
         public DbSet<AnimalCuidado> AnimalCuidados { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuração de relacionamento Muitos-para-Muitos entre Animal e Cuidado
+            // Configuração de relacionamento Muitos-para-Muitos
             modelBuilder.Entity<AnimalCuidado>()
                 .HasKey(ac => new { ac.AnimalId, ac.CuidadoId });
 
@@ -30,6 +31,11 @@ namespace Sistema_Controle_Zoologico.Data
                 .HasOne(ac => ac.Cuidado)
                 .WithMany(c => c.AnimalCuidados)
                 .HasForeignKey(ac => ac.CuidadoId);
+
+            // Configurações adicionais para o Usuario
+            modelBuilder.Entity<Usuario>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }
