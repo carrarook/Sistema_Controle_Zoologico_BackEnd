@@ -2,7 +2,9 @@
 Backend da aplicação de gerenciamento de animais e cuidados, desenvolvido em .NET 9 com banco de dados SQLite.
 
 👉 Frontend: [sistemazoologicofront.vercel.app](https://sistemazoologicofront.vercel.app/)
+
 📦 Repositório do Frontend: [zoo-management-client](https://github.com/carrarook/zoo-management-client)
+
 📦 Repositório do Back: [Sistema_Controle_Zoologico_BackEnd](https://github.com/carrarook/Sistema_Controle_Zoologico_BackEnd)
 
 -------- Funcionalidades -------- 
