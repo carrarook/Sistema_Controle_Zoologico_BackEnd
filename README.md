@@ -15,7 +15,7 @@ Backend da aplicação de gerenciamento de animais e cuidados, desenvolvido em .
 
 * Relacionar cuidados aos animais
 
-* Dashboard com informações resumidas
+* Dashboard (cartões) com informações resumidas 
 
 -------- Tecnologias -------- 
 
@@ -26,6 +26,11 @@ Backend da aplicação de gerenciamento de animais e cuidados, desenvolvido em .
 * SQLite
 
 * API REST
+
+-------- Dificuldades -------- 
+
+Tive problemas em relação a autenticação e hospedagem no azure (por algum motivo quando em prod, a requisição de auth não funcionava).
+Também tive um pouco de problemas ao implementar SPA (primeira aplicação que utilizei esse principio) e em algumas partes tive que fugir e utilizar do reload.
 
 -------- Problemas conhecidos -------- 
 
