@@ -32,9 +32,20 @@ Backend da aplicação de gerenciamento de animais e cuidados, desenvolvido em .
 ⚠️ SQLite no Azure Free Tier não persiste dados em alguns casos.
 
 -------- Melhorias futuras -------- 
-Corrigir CORS para login no Azure
 
-Trocar SQLite por banco com persistência garantida
+* Corrigir CORS para login no Azure
 
-Implementar autenticação completa
+* Trocar SQLite por banco com persistência garantida
+
+* Implementar autenticação completa
+
+-------- Como rodar localmente --------
+
+1. Clone o backend e o frontend
+2. No frontEnd, altere o endereço da API nos arquivos Services (apenas descomentar o teste e comentar a produção), confira o endereço local e altere para sua porta se diferente
+3. Certifique-se de quem todas as bibliotecas necessárias, assim como o .net
+4. Rode o .net (Atente-se a porta que está rodando)
+5. rode o front ent (npm start)
+6. Se quiser conferir as funcionalidades que funcionam localmente, troque o routes.jsx pelo arquivo .txt na mesma pasta
+7. Thanks
 
