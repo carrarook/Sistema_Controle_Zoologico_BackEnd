@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//auth
-
+// Configuração de Autenticação com Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.Cookie.HttpOnly = true;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SameSite = SameSiteMode.None; // Permitir cookies cross-origin
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
     });
 
+// Configuração de Sessão
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
@@ -26,40 +26,29 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de sessão
 });
 
-
-
-
 // Adicionar serviços ao container
 builder.Services.AddControllersWithViews();
 
-// Configurar SQLite
+// Configuração do banco de dados SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configuração para preservar referências em JSON
-
+// Configuração de JSON para preservar referências
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        options.JsonSerializerOptions.WriteIndented = true;
-    });
-
-// Configurar CORS
+// Configuração de CORS para permitir a comunicação com o frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
         policy => policy
-            .WithOrigins("http://localhost:3000", "https://sistemazoologicofront.vercel.app")
+            .WithOrigins("http://localhost:3000", "https://sistemazoologicofront.vercel.app") // Permitir CORS para esses domínios
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials());
+            .AllowCredentials()); // Permitir envio de cookies
 });
 
-// Adicionar Swagger
+// Configuração do Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -70,14 +59,14 @@ builder.Services.AddSwaggerGen(c =>
         Contact = new OpenApiContact
         {
             Name = "Brunin",
-            Email = "bbãodemais@dominio.com"
+            Email = "bãodemais@dominio.com"
         }
     });
 });
 
 var app = builder.Build();
 
-// Configurar o pipeline de requisições HTTP
+// Configuração do pipeline de requisições HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -88,25 +77,28 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors("AllowReactApp"); 
+// Habilita a política de CORS
+app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Habilita a sessão
 app.UseSession();
 
-
-// Habilitar o Swagger e Swagger UI
+// Habilitar o Swagger e Swagger UI em ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger(); // Habilita o Swagger
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Controle Zoológico API v1");
-        c.RoutePrefix = string.Empty; // O Swagger UI estará disponível em /
+        c.RoutePrefix = string.Empty; // O Swagger UI estará disponível em / (raiz)
     });
 }
 
+// Mapeamento das rotas
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
